@@ -172,7 +172,7 @@ button{font:inherit;color:inherit}
 .panel .x{position:absolute;top:14px;right:16px;background:none;border:0;cursor:pointer;font-family:var(--label);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 .panel .acts{display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;align-items:center}
 .panel .btn{font-family:var(--label);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#1C1B18;background:none;border:0;border-bottom:1px solid #1C1B18;padding:2px 0;cursor:pointer;text-decoration:none}
-.panel.rs{width:min(820px,100%);padding:40px 28px 28px}.panel.wide{width:min(980px,100%);padding:40px 28px 28px}.deckwrap{position:relative;aspect-ratio:16/9;margin-top:6px;background:#1b1b1b;border:1px solid rgba(0,0,0,.1)}.deckhint{margin:10px 0 0;font-size:.85em;opacity:.7}.deckwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.panel.rs{width:min(820px,100%);padding:40px 28px 28px}.panel.wide{width:min(980px,100%);padding:40px 28px 28px}.deckwrap{position:relative;aspect-ratio:16/9;margin-top:6px;background:#1b1b1b;border:1px solid rgba(0,0,0,.1)}.deckctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:12px}.deckctl button{width:40px;height:40px;border-radius:50%;border:1px solid currentColor;background:none;color:inherit;font:inherit;font-size:18px;line-height:1;cursor:pointer;opacity:.85}.deckctl button:hover{opacity:1}.deckctl button:disabled{opacity:.3;cursor:default}.deck-n{min-width:64px;text-align:center;font-size:.9em;opacity:.75;font-variant-numeric:tabular-nums}.deckhint{margin:10px 0 0;font-size:.85em;opacity:.7}.deckwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .panel .rs-img{display:block;width:100%;height:auto;margin-top:14px;box-shadow:0 1px 4px rgba(0,0,0,.18)}.panel .rs-acts{margin-top:0}
 .panel .soon{font-style:italic;color:#77705F}
 .email{user-select:all;font-weight:700}
@@ -284,7 +284,7 @@ body.w-nb .notebook{display:block}
 .nb-line span{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:13px;color:var(--rust)}
 .nb-input{flex:1;min-width:0;border:0;background:transparent;outline:none;font-family:'Newsreader',Georgia,serif;font-size:13px;color:var(--ink);padding:4px 0}
 .nb-input::placeholder{color:#A0968A;font-style:italic}
-.nb-ribbon{position:absolute;left:calc(50% - 6px);bottom:calc(var(--nbw)*-.1);width:12px;height:calc(var(--nbw)*.14);background:linear-gradient(90deg,#7E3421,#A24A30 50%,#7E3421);clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%);z-index:3;box-shadow:0 2px 3px rgba(0,0,0,.2)}
+.nb-ribbon{position:absolute;left:calc(50% + var(--nbw)*.035);top:-2px;bottom:calc(var(--nbw)*-.045);width:calc(var(--nbw)*.014);min-width:9px;background:linear-gradient(90deg,#7E3421,#A94E33 45%,#8A3924);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - var(--nbw)*.012),0 100%);z-index:3;box-shadow:none;filter:drop-shadow(1px 1px 1px rgba(60,30,20,.35))}
 
 
 /* =========================================================
@@ -404,6 +404,10 @@ body.w-lp .center{align-self:center}
   .nb-line{margin-top:6px}
   .nb-input,.nb-line span{font-size:16px}
 }
+body .panel{border-radius:18px}
+body .deckwrap{border:0;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px -8px rgba(0,0,0,.22)}
+body .deckwrap iframe{border:0;border-radius:12px}
+body .panel .rs-img{border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px -8px rgba(0,0,0,.22)}
 .menu-btn{display:none}
 @media (max-width:640px){
   .nav{height:56px;gap:12px;position:sticky;top:0;z-index:30}
@@ -558,12 +562,12 @@ body.w-lp .center{align-self:center}
   const PANELS = {
     about: ['Jenny Fant', `<p>Content and model designer in San Francisco. Nearly a decade at Meta, most recently at Meta Superintelligence Labs, designing products that help people understand and trust technology.</p><div class="acts"><button class="btn" data-open="contact">Get in touch</button></div>`],
     resume: ['Resume', `<div class="acts rs-acts"><a class="btn" href="Jenny_Fant_Resume.pdf" download="Jenny_Fant_Resume.pdf">Download PDF</a></div><img class="rs-img" src="resume.webp" alt="Jenny Fant's resume: content and model design, Meta 2017 to 2026">`],
-    content: ['Content design', `<div class="deckwrap"><iframe src="https://embed.figma.com/slides/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995&amp;embed-host=share" title="Jenny Fant content design portfolio" allowfullscreen loading="lazy"></iframe></div><p class="deckhint">Click the deck, then use ← → to flip through.</p><div class="acts"><a class="btn" href="https://www.figma.com/deck/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995" target="_blank" rel="noopener">Open full screen in Figma</a></div>`],
-    model: ['Model design', `<p>The model is the product. I shape how it thinks out loud: its voice, its judgment, and how honestly it explains what it can and can't do. That means working with researchers to turn fuzzy qualities like helpful, humble, and warm into behavior people can feel, then testing it until it holds up.</p><ul>
-      <li><b>Voice and character</b>I define how an AI should sound and act across products, from the tone of a single reply to Meta's AI content standards for transparency, trust, and attribution.</li>
-      <li><b>Research partnership</b>I work side by side with AI researchers. On Agentic Research Environments I shaped the prompts and terminology used to evaluate agents, and I'm named in the ARE &amp; GAIA2 publication.</li>
-      <li><b>Evaluation and iteration</b>I treat behavior as something to measure. I build rubrics and AI tools that score outputs against principles, then keep what works and drop what doesn't.</li>
-      <li><b>Empathy at global scale</b>A decade of writing for billions of people, from new-to-internet users to teens and families, taught me to design for people who aren't like me.</li></ul><div class="acts"><span class="soon">Full model design portfolio coming soon.</span></div>`],
+    content: ['Content design', `<div class="deckwrap"><iframe src="https://embed.figma.com/slides/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995&amp;embed-host=share" title="Jenny Fant content design portfolio" allowfullscreen loading="lazy"></iframe></div><div class="deckctl"><button type="button" class="deck-prev" aria-label="Previous slide">←</button><span class="deck-n" aria-live="polite"></span><button type="button" class="deck-next" aria-label="Next slide">→</button></div><div class="acts"><a class="btn" href="https://www.figma.com/deck/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995" target="_blank" rel="noopener">Open full screen in Figma</a></div>`],
+    model: ['Model design', `<p>More and more, the model is the product. I'm drawn to the questions underneath that: how an AI should sound, when it should hold back, and how it can be honest about what it can and can't do. I like working through those questions with researchers, writing and testing, and adjusting as we learn.</p><ul>
+      <li><b>Voice and character</b>Helping an AI feel clear, warm, and trustworthy, from the tone of a single reply to how it talks about itself.</li>
+      <li><b>Research partnership</b>I worked closely with AI researchers on Agentic Research Environments (ARE), helping shape the prompts and language used to evaluate agents. That work was part of the ARE &amp; GAIA2 publication.</li>
+      <li><b>Evaluation and iteration</b>Treating behavior as something to test: comparing outputs against clear principles, keeping what works, and letting go of what doesn't.</li>
+      <li><b>Empathy at scale</b>Years of writing for very different people, from new-to-internet users to teens and families, and a habit of designing for people who aren't like me.</li></ul><div class="acts"><span class="soon">Full model design portfolio coming soon.</span></div>`],
     contact: ['Contact', `<p>Open to content design and model design roles.</p><p><span class="email" id="email">jennyfant@icloud.com</span></p><div class="acts"><button class="btn" id="copy" type="button">Copy email</button><a class="btn" href="https://www.linkedin.com/in/jennyfant" target="_blank" rel="noopener">LinkedIn</a></div>`]
   };
   const scrim = $('#scrim'), panel = $('#panel'); let lastFocus = null;
@@ -589,13 +593,27 @@ body.w-lp .center{align-self:center}
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); mb.focus(); } });
     matchMedia('(min-width:641px)').addEventListener('change', m => { if (m.matches) set(false); });
   })();
+
+  const DECK = ["1-995", "1-1001", "1-1052", "1-1056", "2010-1153", "2010-1171", "2011-1799", "2011-1760", "2011-1303", "2011-1325", "2011-1339", "2011-1381", "2011-1407", "2011-1638", "2008-786", "1-1743", "1-1149", "1-1155", "2007-778", "2007-284", "2007-305", "2007-325", "2007-335", "2007-345", "2007-370", "2007-400", "2007-421", "2007-446", "2007-471", "2007-496", "2007-537", "2007-569", "2007-603", "2007-633", "2007-667", "2007-697", "2011-1991"];
+  let deckIdx = 0;
+  function deckGo(i) {
+    const fr = panel.querySelector('.deckwrap iframe'); if (!fr) return;
+    deckIdx = Math.max(0, Math.min(DECK.length - 1, i));
+    const url = fr.getAttribute('src').replace(/node-id=[\d-]+/, 'node-id=' + DECK[deckIdx]);
+    fr.setAttribute('src', url);
+    const a = panel.querySelector('a[href*="figma.com/deck"]'); if (a) a.setAttribute('href', a.getAttribute('href').replace(/node-id=[\d-]+/, 'node-id=' + DECK[deckIdx]));
+    const n = panel.querySelector('.deck-n'); if (n) n.textContent = (deckIdx + 1) + ' / ' + DECK.length;
+    const p = panel.querySelector('.deck-prev'), x = panel.querySelector('.deck-next');
+    if (p) p.disabled = deckIdx === 0; if (x) x.disabled = deckIdx === DECK.length - 1;
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('.deck-prev,.deck-next'); if (!b) return; deckGo(deckIdx + (b.classList.contains('deck-next') ? 1 : -1)); });
   function openPanel(id, slide) {
     
     const p = PANELS[id]; if (!p) return; lastFocus = document.activeElement;
     panel.classList.toggle('rs', id === 'resume'); panel.classList.toggle('wide', id === 'content'); panel.innerHTML = `<button type="button" class="x" data-close>Close</button><h2 id="panel-title">${p[0]}</h2>${p[1]}`;
     scrim.hidden = false; panel.focus({ preventScroll: true });
     const c = $('#copy'); if (c) c.addEventListener('click', copyEmail);
-    const fr = panel.querySelector('.deckwrap iframe'); if (fr) { const f = () => { try { fr.focus(); fr.contentWindow && fr.contentWindow.focus(); } catch (err) {} }; fr.addEventListener('load', () => setTimeout(f, 300)); setTimeout(f, 1200); }
+    if (id === 'content') { deckIdx = Math.max(0, DECK.indexOf(slide || DECK[0])); const n = panel.querySelector('.deck-n'); if (n) n.textContent = (deckIdx + 1) + ' / ' + DECK.length; const pb = panel.querySelector('.deck-prev'); if (pb) pb.disabled = deckIdx === 0; }
     if (id === 'content' && slide) panel.querySelectorAll('iframe[src],a[href*="figma.com"]').forEach(el => { const at = el.tagName === 'IFRAME' ? 'src' : 'href'; el.setAttribute(at, el.getAttribute(at).replace(/node-id=[\d-]+/, 'node-id=' + slide)); });
   }
   function closePanel() { scrim.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); }
@@ -603,7 +621,7 @@ body.w-lp .center{align-self:center}
     const o = e.target.closest('[data-open]'); if (o && !o.closest('.key')) { e.preventDefault(); openPanel(o.dataset.open, o.dataset.slide); return; }
     if (e.target.closest('[data-close]') || e.target === scrim) closePanel();
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !scrim.hidden) closePanel(); if (!scrim.hidden && /^Arrow(Left|Right)$/.test(e.key)) { const fr = panel.querySelector('.deckwrap iframe'); if (fr) { e.preventDefault(); try { fr.focus(); fr.contentWindow.focus(); } catch (err) {} } } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !scrim.hidden) closePanel(); if (!scrim.hidden && /^Arrow(Left|Right)$/.test(e.key) && panel.querySelector('.deckwrap iframe') && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); deckGo(deckIdx + (e.key === 'ArrowRight' ? 1 : -1)); } });
   function copyEmail(e) {
     const b = e.currentTarget, sel = () => { getSelection().selectAllChildren($('#email')); b.textContent = 'Press ⌘C to copy'; };
     try { navigator.clipboard.writeText('jennyfant@icloud.com').then(() => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy email', 1600); }, sel); } catch (err) { sel(); }
@@ -844,7 +862,7 @@ body.w-lp .center{align-self:center}
     const narrow = innerWidth <= 1060, H = innerHeight - 52;
     const pad = Math.min(40, Math.max(20, innerWidth * .026));
     const col = narrow ? innerWidth - 2 * pad : innerWidth - 2 * 210 - 4 * pad - 80;
-    const w = narrow ? col : Math.min(col, (H - 90) * 1.52, 1180);
+    const w = narrow ? col : Math.min(col, (H - 90) * 1.52, 1180) * .8;
     nb.style.setProperty('--nbw', Math.max(300, w).toFixed(0) + 'px');
   }
   addEventListener('resize', fitNotebook);

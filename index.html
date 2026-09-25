@@ -533,16 +533,17 @@ body.w-lp .center{align-self:center}
       await dl.save({ filename: a.getAttribute('download'), data: blob });
     } catch (err) { if (err && err.code === 'unavailable') window.open(a.href, '_blank'); }
   });
-  function openPanel(id) {
+  function openPanel(id, slide) {
     
     const p = PANELS[id]; if (!p) return; lastFocus = document.activeElement;
     panel.classList.toggle('rs', id === 'resume'); panel.classList.toggle('wide', id === 'content'); panel.innerHTML = `<button type="button" class="x" data-close>Close</button><h2 id="panel-title">${p[0]}</h2>${p[1]}`;
     scrim.hidden = false; panel.focus({ preventScroll: true });
     const c = $('#copy'); if (c) c.addEventListener('click', copyEmail);
+    if (id === 'content' && slide) panel.querySelectorAll('iframe[src],a[href*="figma.com"]').forEach(el => { const at = el.tagName === 'IFRAME' ? 'src' : 'href'; el.setAttribute(at, el.getAttribute(at).replace(/node-id=[\d-]+/, 'node-id=' + slide)); });
   }
   function closePanel() { scrim.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); }
   document.addEventListener('click', e => {
-    const o = e.target.closest('[data-open]'); if (o && !o.closest('.key')) { e.preventDefault(); openPanel(o.dataset.open); return; }
+    const o = e.target.closest('[data-open]'); if (o && !o.closest('.key')) { e.preventDefault(); openPanel(o.dataset.open, o.dataset.slide); return; }
     if (e.target.closest('[data-close]') || e.target === scrim) closePanel();
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !scrim.hidden) closePanel(); });
@@ -648,9 +649,11 @@ body.w-lp .center{align-self:center}
 
   /* ---------- Answers (typed onto the paper) ---------- */
   const L = (t, open) => ({ t, open });
+  const S = (t, slide) => ({ t, open: 'content', slide });
+  const P = (t, slide) => ({ t, open: 'content', slide, inline: true });
   function linkFor(s) {
     
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'lnk'; b.dataset.open = s.open; return b;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'lnk'; b.dataset.open = s.open; if (s.slide) b.dataset.slide = s.slide; return b;
   }
   const RES = L('See the resume', 'resume'), CD = L('See the content design portfolio', 'content'), MD = L('See the model design portfolio', 'model'), CT = L('Get in touch', 'contact');
   const RULES = [
@@ -658,15 +661,27 @@ body.w-lp .center{align-self:center}
     [/(are you|is this).*(ai|bot|real|chatgpt|claude|human)/, ["I'm a scripted guide, not a live AI. Jenny wrote every answer, which is kind of the point: deciding what a system says, and when, is her job. ", MD]],
     [/another/, ["Button labels:\n", { ex: 'OK' }, { ex: 'Delete' }, { ex: 'Delete 3 photos' }, "\nThe last one says exactly what will happen before you press it. There's more of this thinking in the ", L('content design portfolio', 'content'), "."]],
     [/example|show me|error message/, ["One error message, three ways:\n", { ex: 'Error 403: Forbidden.' }, { ex: "You don't have access to this file." }, { ex: "You don't have access to this file. Ask the owner to share it." }, "\nThe last one says what happened and what to do next. ", CD]],
-    [/content design work|jenny's content|climate|teen|safety|donat|giving|instagram|connectivity/, ["Climate misinformation, teen safety, Instagram donation matching, and connectivity, all in one place. ", CD]],
-    [/model design work|jenny's model|meta ai|msl|superintelligence|\bare\b|gaia|standards|agent/, ["AI content standards, Agentic Research Environments, and an AI copy tool, all from Meta Superintelligence Labs. ", MD]],
+    [/crisis|safety check|marked safe|early warning|disaster|earthquake|hurricane|world bank/, ["Jenny owned content for Facebook's crisis response tools. She brought the UN's Early Warnings for All to Facebook with the World Bank, and used on-the-ground research and data science to find wording people understood across literacy levels, which lifted \"marked safe\" check-ins by 5%. ", S('See the crisis response work', '2011-1339')]],
+    [/teen|youth|\bsafety\b|parent|kid|child|family|supervision|co-?design/, ["Jenny was a content design lead on teen safety. She ran co-design sessions with teen safety experts, parent group leaders, and leaders of non-traditional family groups, tracked where academics and policymakers were heading, and built that expertise into the standards every teen and family product starts from. She also led early naming explorations for supervision. ", S('See the teen safety work', '2011-1760')]],
+    [/climate|ipcc|misinformation|science|fact.?check|environment|yale|cambridge/, ["On a three-person climate team (content, product design, research), Jenny turned IPCC and academic science into plain, approachable content for the Climate Science Information Center, partnering with Yale, Cambridge, RMI, the UN, and the European Parliament. ", S('See the climate work', '2011-1303')]],
+    [/share.?a.?thon|naming|name things|variant|pros and cons/, ["Naming is a big part of Jenny's craft. For Instagram Giving she weighed options like \"share-a-thon\" against \"donate-per-share pledge,\" trading off clarity, translation, and tone. ", S('See the naming exploration', '2011-1638')]],
+    [/donat|giving|fundrais|nonprofit|charity|match/, ["On Instagram Giving, Jenny led the ideation, strategy, and execution of donation matching: up to 65% more dollars raised and up to 27% more donation conversions on fundraisers. She partnered with data science and research to improve an already mature product. ", S('See the Instagram Giving work', '2011-1381')]],
+    [/connectivity|free facebook|discover|flex|covid|pandemic|health info|net.?neutral|emerging market|low.?data|literacy/, ["Jenny started at Meta in Connectivity, writing for Free Facebook and Discover, which bring people online who can't afford regular mobile data. The constraints: tiny screens, text only, and global net neutrality policy. A highlight was getting COVID-19 health information to the people who needed it most. ", S('See the connectivity work', '2008-786')]],
+    [/generator|copy tool|ai tool|tooling|scale|empower|\bpms?\b|engineer|xfn|cross.?functional/, ["Jenny built a growth copy generator for Meta Superintelligence Labs. Designers, PMs, and engineers pick a surface, placement, tone, and value props (and can add screenshots and docs), and it returns 10 to 100 ranked options with editorial notes on why some work better. ", S('See the copy generator', '1-1155')]],
+    [/growth|vibes|install|app store|acquisition|muse/, ["Jenny led growth content design for Meta AI launches like Vibes and the Meta AI 2.0 launch, iterating fast on which value props landed with new users. It became Meta AI's highest-impact growth lever to date: 106k installs. ", S('See the growth work', '2010-1171')]],
+    [/vibe.?cod|30 days|page turners|book club|side project|build|claude|cursor|manus|polish|audit/, ["This past March Jenny vibe coded 30 projects in 30 days. One was Page Turners, a site for her book club. She wrote a custom /visual-polish-audit skill with Claude and iterated until the polish score went from 4.6 to 7.1. ", S('See Page Turners', '2007-284')]],
+    [/history|how long|hackathon|early adopter|timeline|decade/, ["Jenny has worked in AI for nearly a decade: training an early AI model on how she formats meeting notes, winning Meta's 2023 global generative AI hackathon, leading AI pilots in central product, and being named in the ARE & GAIA2 publication. ", S('See the timeline', '1-1001')]],
+    [/model design work|jenny's model|meta ai|msl|superintelligence|agentic research|gaia|agentic|agent|standards|terminology/, ["At Meta Superintelligence Labs, Jenny led content standards for MSL and Meta AI, and set foundational industry terminology for agentic research with Agentic Research Environments (ARE). ", S('See the MSL work', '2010-1153'), " or ", L('the model design portfolio', 'model'), "."]],
+    [/content design work|jenny's content|her work|case stud|what has she (done|worked)/, ["Five areas: ", P('MSL and Meta AI', '2010-1153'), ", ", P('teen safety', '2011-1760'), ", ", P('climate and crisis response', '2011-1303'), ", ", P('Instagram Giving', '2011-1381'), ", and ", P('connectivity', '2008-786'), ". Where would you like to start?"]],
+    [/process|approach|how (does|do) (she|you) work|method|collaborat|stakeholder|legal|policy|strategy/, ["Jenny's approach: attention to craft, refining systems, collaborating across disciplines, and grounding decisions in insight. On teen safety that meant listen, integrate, standardize. ", S('See the process', '2011-1760'), " or ", L('the full portfolio', 'content'), "."]],
+    [/strength|why hire|good at|stand out|unique|best/, ["She designs for real-world outcomes and earns trust quickly across very different domains: ", P('AI growth', '2010-1171'), ", ", P('teen safety', '2011-1760'), ", ", P('climate science', '2011-1303'), ", and ", P('fundraising', '2011-1381'), ". She also builds her own tools, like a ", P('growth copy generator', '1-1155'), ". ", RES]],
     [/content design/, ["Content design is designing with words and structure: what a product says, when it says it, and how it's organized, so people can get things done. See how Jenny does it: ", CD]],
     [/model (design|behavior|behaviour)|prompt|eval/, ["Model design shapes how an AI behaves: its voice, what it will and won't do, and how it explains itself. See Jenny's work: ", MD]],
     [/resume|cv|experience|background|meta/, ["Nearly a decade at Meta, most recently at Meta Superintelligence Labs. ", RES]],
-    [/portfolio|case stud|project|\bwork\b/, ["There are two portfolios: ", L('content design', 'content'), " and ", L('model design', 'model'), "."]],
+    [/portfolio|project|\bwork\b/, ["There are two portfolios: ", L('content design', 'content'), " and ", L('model design', 'model'), "."]],
     [/contact|email|hire|reach|linkedin|job|role|available|open to/, ["Jenny is open to content design and model design roles. ", CT]],
-    [/who|about|jenny|yourself/, ["Jenny is a content and model designer in San Francisco. ", RES, " or ", CT.t ? L('get in touch', 'contact') : CT, "."]],
-    [/typewriter|machine|keyboard|notebook|desk/, ["Click Jenny's name to switch desks. Same Jenny, different desk. While you're here: ", CD]],
+    [/who|about|jenny|yourself/, ["Jenny is a content and model designer in San Francisco. ", RES, " or ", L('get in touch', 'contact'), "."]],
+    [/typewriter|machine|keyboard|notebook|desk|laptop|sticker|dog|jax/, ["Click Jenny's name to switch desks. Same Jenny, different desk. While you're here: ", CD]],
     [/thank|thanks|cool|nice|love/, ["Thanks for stopping by. Jenny would love to hear from you. ", CT]]
   ];
   const FALLBACK = ["I don't have an answer for that one yet. The best next step is the ", L('resume', 'resume'), ", a ", L('portfolio', 'content'), ", or ", L('getting in touch', 'contact'), "."];
@@ -688,7 +703,7 @@ body.w-lp .center{align-self:center}
     for (const s of segs) {
       if (typeof s === 'string') { const span = document.createElement('span'); p.appendChild(span); await typeInto(span, s); }
       else if (s.ex) { const span = document.createElement('span'); span.className = 'ex'; p.appendChild(span); await typeInto(span, '– ' + s.ex); }
-      else { const b = linkFor(s); p.appendChild(b); await typeInto(b, s.t + (/^(content design|model design|the resume|resume|portfolio|getting in touch|get in touch|content design portfolio)$/.test(s.t) ? '' : ' →')); }
+      else { const b = linkFor(s); p.appendChild(b); await typeInto(b, s.t + (s.inline || /^(content design|model design|the resume|resume|portfolio|getting in touch|get in touch|content design portfolio)$/.test(s.t) ? '' : ' →')); }
     }
     bell();
   }

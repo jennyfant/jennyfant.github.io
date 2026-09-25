@@ -408,6 +408,16 @@ body .panel{border-radius:18px}
 body .deckwrap{border:0;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px -8px rgba(0,0,0,.22)}
 body .deckwrap iframe{border:0;border-radius:12px}
 body .panel .rs-img{border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px -8px rgba(0,0,0,.22)}
+body .nav .brand::after{top:calc(100% + 12px);font-size:12px;padding:9px 13px;border-radius:8px;box-shadow:0 8px 22px -8px rgba(0,0,0,.45);transform:translateY(-4px);transition:opacity .2s ease,transform .2s ease}
+body .nav .brand::before{content:"";position:absolute;left:18px;top:calc(100% + 6px);width:12px;height:12px;background:var(--ink);transform:rotate(45deg) translateY(-4px);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:19}
+body .nav .brand:hover::after,body .nav .brand:focus-visible::after,body .nav .brand.tip-on::after{opacity:1;transform:none}
+body .nav .brand:hover::before,body .nav .brand:focus-visible::before,body .nav .brand.tip-on::before{opacity:1;transform:rotate(45deg)}
+body.w-nb .nav .brand::after{font-size:16px;padding:8px 14px}
+body.w-lp .nav .brand::after{font-size:14px;font-weight:500;padding:9px 14px;border-radius:10px}
+body .nav .brand.tip-on{animation:brandpulse 1.6s ease-out 2}
+@keyframes brandpulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--nudge) 55%,transparent)}100%{box-shadow:0 0 0 12px transparent}}
+body.w-nb .nav .brand.tip-on{animation:none}
+@media (prefers-reduced-motion:reduce){body .nav .brand.tip-on{animation:none}}
 .menu-btn{display:none}
 @media (max-width:640px){
   .nav{height:56px;gap:12px;position:sticky;top:0;z-index:30}
@@ -564,10 +574,10 @@ body .panel .rs-img{border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8p
     resume: ['Resume', `<div class="acts rs-acts"><a class="btn" href="Jenny_Fant_Resume.pdf" download="Jenny_Fant_Resume.pdf">Download PDF</a></div><img class="rs-img" src="resume.webp" alt="Jenny Fant's resume: content and model design, Meta 2017 to 2026">`],
     content: ['Content design', `<div class="deckwrap"><iframe src="https://embed.figma.com/slides/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995&amp;embed-host=share" title="Jenny Fant content design portfolio" allowfullscreen loading="lazy"></iframe></div><div class="deckctl"><button type="button" class="deck-prev" aria-label="Previous slide">←</button><span class="deck-n" aria-live="polite"></span><button type="button" class="deck-next" aria-label="Next slide">→</button></div><div class="acts"><a class="btn" href="https://www.figma.com/deck/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995" target="_blank" rel="noopener">Open full screen in Figma</a></div>`],
     model: ['Model design', `<p>More and more, the model is the product. I'm drawn to the questions underneath that: how an AI should sound, when it should hold back, and how it can be honest about what it can and can't do. I like working through those questions with researchers, writing and testing, and adjusting as we learn.</p><ul>
-      <li><b>Voice and character</b>Helping an AI feel clear, warm, and trustworthy, from the tone of a single reply to how it talks about itself.</li>
+      <li><b>Voice and character</b>I write to help AI feel clear, warm, and trustworthy, from the tone of a single reply to how it talks about itself.</li>
       <li><b>Research partnership</b>I worked closely with AI researchers on Agentic Research Environments (ARE), helping shape the prompts and language used to evaluate agents. That work was part of the ARE &amp; GAIA2 publication.</li>
-      <li><b>Evaluation and iteration</b>Treating behavior as something to test: comparing outputs against clear principles, keeping what works, and letting go of what doesn't.</li>
-      <li><b>Empathy at scale</b>Years of writing for very different people, from new-to-internet users to teens and families, and a habit of designing for people who aren't like me.</li></ul><div class="acts"><span class="soon">Full model design portfolio coming soon.</span></div>`],
+      <li><b>Evaluation and iteration</b>I test behavior, comparing outputs against clear principles, keeping what works, and letting go of what doesn't.</li>
+      <li><b>Empathy at scale</b>I’ve spent years writing for people at the margins, from new-to-internet users to teens and families, and built a muscle considering needs from people around the globe.</li></ul><div class="acts"><span class="soon">Full model design portfolio coming soon.</span></div>`],
     contact: ['Contact', `<p>Open to content design and model design roles.</p><p><span class="email" id="email">jennyfant@icloud.com</span></p><div class="acts"><button class="btn" id="copy" type="button">Copy email</button><a class="btn" href="https://www.linkedin.com/in/jennyfant" target="_blank" rel="noopener">LinkedIn</a></div>`]
   };
   const scrim = $('#scrim'), panel = $('#panel'); let lastFocus = null;
@@ -965,6 +975,8 @@ body .panel .rs-img{border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8p
   });
   let swapped = false; try { swapped = localStorage.getItem('swapped') === '1'; } catch (e) {}
   if (!swapped) setTimeout(() => nudge.classList.add('show'), 12000);
+  setTimeout(() => { if (matchMedia('(min-width:641px)').matches) { swap.classList.add('tip-on'); setTimeout(() => swap.classList.remove('tip-on'), 5000); } }, 1500);
+
 
   let startWorld = 'tw'; try { startWorld = localStorage.getItem('world') || 'tw'; } catch (e) {}
   fit(); fitNotebook(); fitLaptop();

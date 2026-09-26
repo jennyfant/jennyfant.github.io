@@ -741,6 +741,23 @@ body.w-nb .nav .brand.tip-on{animation:none}
     const b = document.createElement('button'); b.type = 'button'; b.className = 'lnk'; b.dataset.open = s.open; if (s.slide) b.dataset.slide = s.slide; return b;
   }
   const RES = L('See the resume', 'resume'), CD = L('See the content design portfolio', 'content'), MD = L('See the model design portfolio', 'model'), CT = L('Get in touch', 'contact');
+  const V = (...variants) => ({ variants });
+  const ruleSeen = new Map();
+  let lastEnd = null, lastRule = null;
+  function vary(r) {
+    let a = r ? r[1] : nextFallback();
+    const keep = !!(a && a.variants);
+    if (a && a.variants) { const n = ruleSeen.get(r) || 0; ruleSeen.set(r, n + 1); a = a.variants[n % a.variants.length]; }
+    else if (r && r === lastRule) { a = ["Same answer as a moment ago, so here's something new instead. "].concat(nextFallback()); }
+    a = a.slice();
+    // drop a trailing call to action if the last answer ended with the same one
+    let k = a.length - 1; if (typeof a[k] === 'string' && /^[.\s]*$/.test(a[k])) k--;
+    const tail = a[k];
+    const key = tail && typeof tail === 'object' && !tail.slide ? tail.open : null;
+    if (!keep && key && key === lastEnd && k > 0) { a = a.slice(0, k); if (typeof a[a.length - 1] === 'string') a[a.length - 1] = a[a.length - 1].replace(/[\s:,]+$/, '') .replace(/([^.!?])$/, '$1.'); }
+    lastEnd = key || null; lastRule = r;
+    return a;
+  }
   const RULES = [
     [/\b(hi|hello|hey|yo|howdy|good (morning|afternoon|evening))\b/, ["Hello! The quickest way to get to know Jenny is her work. Start with the ", L('content design portfolio', 'content'), ", or ", L('the resume', 'resume'), "."]],
     [/(are you|is this).*(ai|bot|real|chatgpt|claude|human)/, ["I'm a scripted guide, not a live AI. Jenny wrote every answer, which is kind of the point: deciding what a system says, and when, is her job. ", MD]],
@@ -766,12 +783,21 @@ body.w-nb .nav .brand.tip-on{animation:none}
     [/outside (of )?work|hobbies|fun fact|for fun|personal|dog|jax|sticker|dolphin|swim|book/, ["Off the clock: that's her Aussie, Jax, on the laptop, plus her Dolphin Club sticker. She also runs a book club, and naturally she built it a website. ", S('See Page Turners', '2007-284')]],
     [/why content design|why (did|do) (she|you)|passion|care about|motivat/, ["She's drawn to moments where words decide whether people can act, like ", P('a crisis alert', '2011-1339'), ", ", P('a teen privacy setting', '2011-1760'), ", or ", P('a first look at an AI tool', '2010-1171'), ". She designs for real-world outcomes. ", CD]],
     [/impact|result|metric|number|data|success/, ["A few numbers: ", P('106k installs', '2010-1171'), " from Meta AI's top growth lever, ", P('up to +65% dollars raised', '2011-1407'), " from donation matching, and ", P('+5% \"marked safe\" check-ins', '2011-1339'), " in crisis response. ", CD]],
-    [/strength|why hire|good at|stand out|unique|best/, ["She designs for real-world outcomes and earns trust quickly across very different domains: ", P('AI growth', '2010-1171'), ", ", P('teen safety', '2011-1760'), ", ", P('climate science', '2011-1303'), ", and ", P('fundraising', '2011-1381'), ". She also builds her own tools, like a ", P('growth copy generator', '1-1155'), ". ", RES]],
+    [/should (i|we) hire|hire (her|jenny)|worth hiring|why (should|would) (i|we|you) hire|why hire|good fit|right fit|(would you|do you) recommend|is (she|jenny) (good|any good|great|worth|legit)|convince me|sell me/, V(
+      ["Yes. Emphatically yes. Jenny pairs a decade of content design craft with real AI fluency. She shipped Meta AI's highest-impact growth lever (", P('106k installs', '2010-1171'), "), raised up to ", P('65% more for fundraisers', '2011-1407'), ", and worked side by side with researchers on ", P('agent evaluation', '2010-1153'), ". You'd get someone who writes beautifully and builds her own tools. Don't let her get away: ", L('reach out today', 'contact'), "."],
+      ["Short answer: yes. Longer answer: she earns trust in very different rooms, ships under pressure, and brings her own AI tooling, like the ", P('copy generator', '1-1155'), " she built for her team. The ", L('resume', 'resume'), " makes the case in one page."],
+      ["I'm biased, but so is the evidence. ", P('Teen safety', '2011-1760'), ", ", P('climate science', '2011-1303'), ", ", P('AI growth', '2010-1171'), ": very different problems, same result. She'd make your team better on day one. ", L('Send her a note', 'contact'), "."]
+    )],
+    [/strength|good at|stand out|unique|best/, ["She designs for real-world outcomes and earns trust quickly across very different domains: ", P('AI growth', '2010-1171'), ", ", P('teen safety', '2011-1760'), ", ", P('climate science', '2011-1303'), ", and ", P('fundraising', '2011-1381'), ". She also builds her own tools, like a ", P('growth copy generator', '1-1155'), ". ", RES]],
     [/content design/, ["Content design is designing with words and structure: what a product says, when it says it, and how it's organized, so people can get things done. See how Jenny does it: ", CD]],
     [/model (design|behavior|behaviour)|prompt|eval/, ["Model design treats the model itself as the product: shaping its voice, its judgment, and how honestly it explains what it can and can't do, in close partnership with researchers and evals. See how Jenny approaches it: ", MD]],
     [/resume|cv|experience|background|meta/, ["Nearly a decade at Meta, most recently at Meta Superintelligence Labs. ", RES]],
     [/portfolio|project|\bwork\b/, ["There are two portfolios: ", L('content design', 'content'), " and ", L('model design', 'model'), "."]],
-    [/contact|email|hire|reach|linkedin|job|role|available|open to/, ["Jenny is open to content design and model design roles. ", CT]],
+    [/contact|email|hire|reach|linkedin|job|role|available|open to/, V(
+      ["Jenny is open to content design and model design roles. ", CT],
+      ["She's actively talking with teams about content and model design roles, so now's a great time. ", L('Send her a note', 'contact'), "."],
+      ["The easiest way to reach her is email. It's all on the ", L('contact card', 'contact'), "."]
+    )],
     [/who|about|jenny|yourself/, ["Jenny is a content and model designer in San Francisco. ", RES, " or ", L('get in touch', 'contact'), "."]],
     [/typewriter|machine|keyboard|notebook|desk|laptop|sticker|dog|jax/, ["Click Jenny's name to switch desks. Same Jenny, different desk. While you're here: ", CD]],
     [/thank|thanks|cool|nice|love/, ["Thanks for stopping by. Jenny would love to hear from you. ", CT]]
@@ -815,7 +841,7 @@ body.w-nb .nav .brand.tip-on{animation:none}
     const q = document.createElement('p'); q.className = 'q'; q.textContent = '> ' + text; typed.appendChild(q); scrollDown();
     const r = RULES.find(([re]) => re.test(text.toLowerCase()));
     await sleep(reduce ? 0 : 280);
-    await reply(r ? r[1] : nextFallback());
+    await reply(vary(r));
     busy = false; if (fine) input.focus({ preventScroll: true });
   }
   async function autoType(q) {
@@ -865,7 +891,7 @@ body.w-nb .nav .brand.tip-on{animation:none}
     const q = document.createElement('p'); q.className = 'nb-q'; q.textContent = text; nbLog.appendChild(q); nbDown();
     const r = RULES.find(([re]) => re.test(text.toLowerCase()));
     await sleep(reduce ? 0 : 350);
-    await nbReply(r ? r[1] : nextFallback());
+    await nbReply(vary(r));
     nbBusy = false; if (fine) nbInput.focus({ preventScroll: true });
   });
   function fitNotebook() {
@@ -937,7 +963,7 @@ body.w-nb .nav .brand.tip-on{animation:none}
     const r = RULES.find(([re]) => re.test(text.toLowerCase()));
     await sleep(reduce ? 0 : 450);
     const p = document.createElement('p'); p.className = 'lp-a'; lpLog.appendChild(p);
-    for (const s of (r ? r[1] : nextFallback())) {
+    for (const s of (vary(r))) {
       if (typeof s === 'string') await streamInto(p, s);
       else if (s.ex) { const span = document.createElement('span'); span.className = 'ex'; p.appendChild(span); await streamInto(span, s.ex); }
       else { const b = linkFor(s); p.appendChild(b); await streamInto(b, s.t); }

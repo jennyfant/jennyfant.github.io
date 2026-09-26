@@ -418,6 +418,17 @@ body .nav .brand.tip-on{animation:brandpulse 1.6s ease-out 2}
 @keyframes brandpulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--nudge) 55%,transparent)}100%{box-shadow:0 0 0 12px transparent}}
 body.w-nb .nav .brand.tip-on{animation:none}
 @media (prefers-reduced-motion:reduce){body .nav .brand.tip-on{animation:none}}
+/* Notebook world: editorial serif instead of handwriting */
+body.w-nb{--hand:'Newsreader',Georgia,'Times New Roman',serif}
+body.w-nb .nav .brand{font-size:21px;font-weight:500;letter-spacing:-.01em}
+body.w-nb .nav .links button,body.w-nb .nav .links a.navlink{font-size:15px;letter-spacing:.01em}
+body.w-nb .lbl{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+body.w-nb .meta dt{font-size:13px;font-style:italic}
+body.w-nb .hand{font-size:calc(var(--nbw)*.021);line-height:1.55;letter-spacing:-.003em}
+body.w-nb .nb-intro p:first-child{font-size:calc(var(--nbw)*.03);font-weight:500;line-height:1.2;letter-spacing:-.015em;margin-bottom:.4em}
+body.w-nb .nb-a{font-size:calc(var(--nbw)*.02);line-height:1.6}
+body.w-nb .nudge span{font-style:italic;font-size:14px}
+@media (max-width:640px){body.w-nb .hand,body.w-nb .nb-a{font-size:16px;line-height:28px}body.w-nb .nav .brand{font-size:19px;padding:0}body.w-nb .menu-btn{font-size:15px}body.w-nb .nav .links > button{font-size:20px}}
 .menu-btn{display:none}
 @media (max-width:640px){
   .nav{height:56px;gap:12px;position:sticky;top:0;z-index:30}

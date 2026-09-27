@@ -12,12 +12,12 @@
 <meta property="og:url" content="https://jennyfant.com/">
 <meta property="og:title" content="Jenny Fant · Content &amp; model design">
 <meta property="og:description" content="Content and model designer in San Francisco. Words, systems, and AI behavior for products people trust.">
-<meta property="og:image" content="https://jennyfant.com/og-image.png">
+<meta property="og:image" content="https://jennyfant.com/og-image.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Jenny Fant, content and model designer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jennyfant.com/og-image.png">
+<meta name="twitter:image" content="https://jennyfant.com/og-image.png?v=2">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -587,7 +587,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
   const PANELS = {
     about: ['Jenny Fant', `<p>Content and model designer in San Francisco. Nearly a decade at Meta, most recently at Meta Superintelligence Labs, designing products that help people understand and trust technology.</p><div class="acts"><button class="btn" data-open="contact">Get in touch</button></div>`],
     resume: ['Resume', `<div class="acts rs-acts"><a class="btn" href="Jenny_Fant_Resume.pdf" download="Jenny_Fant_Resume.pdf">Download PDF</a></div><img class="rs-img" src="resume.webp" alt="Jenny Fant's resume: content and model design, Meta 2019 to 2026">`],
-    content: ['Content design', `<div class="deckwrap"><img class="deckimg" src="deck/slide-01.webp" alt="Content design portfolio, slide 1 of 37" width="1600" height="900" decoding="async"></div><div class="deckctl"><button type="button" class="deck-prev" aria-label="Previous slide">←</button><span class="deck-n" aria-live="polite"></span><button type="button" class="deck-next" aria-label="Next slide">→</button></div><div class="acts"><a class="btn" href="https://www.figma.com/deck/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995" target="_blank" rel="noopener">Open full screen in Figma</a></div>`],
+    content: ['Content design', `<div class="deckwrap"><img class="deckimg" src="deck/slide-01.webp" alt="Content design portfolio, slide 1 of 38" width="1600" height="900" decoding="async"></div><div class="deckctl"><button type="button" class="deck-prev" aria-label="Previous slide">←</button><span class="deck-n" aria-live="polite"></span><button type="button" class="deck-next" aria-label="Next slide">→</button></div><div class="acts"><a class="btn" href="https://www.figma.com/deck/ute4vgu3tr02nEE2q5jVu8/Jenny-Fant-Content-Design---September-2026?node-id=1-995" target="_blank" rel="noopener">Open full screen in Figma</a></div>`],
     model: ['Model design', `<p>More and more, the model is the product. I'm drawn to the questions underneath that: how an AI should sound, when it should hold back, and how it can be honest about what it can and can't do. I like working through those questions with researchers, writing and testing, and adjusting as we learn.</p><ul>
       <li><b>Voice and character</b>I write to help AI feel clear, warm, and trustworthy, from the tone of a single reply to how it talks about itself.</li>
       <li><b>Research partnership</b>I worked closely with AI researchers on Agentic Research Environments (ARE), helping shape the prompts and language used to evaluate agents. That work was part of the ARE &amp; GAIA2 publication, and the project won a 2026 European Product Design Award.</li>
@@ -619,7 +619,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
     matchMedia('(min-width:641px)').addEventListener('change', m => { if (m.matches) set(false); });
   })();
 
-  const DECK = ["1-995", "1-1001", "1-1052", "1-1056", "2010-1153", "2010-1171", "2011-1799", "2011-1760", "2011-1303", "2011-1325", "2011-1339", "2011-1381", "2011-1407", "2011-1638", "2008-786", "1-1743", "1-1149", "1-1155", "2007-778", "2007-284", "2007-305", "2007-325", "2007-335", "2007-345", "2007-370", "2007-400", "2007-421", "2007-446", "2007-471", "2007-496", "2007-537", "2007-569", "2007-603", "2007-633", "2007-667", "2007-697", "2011-1991"];
+  const DECK = ["1-995", "1-1001", "1-1052", "1-1056", "2010-1153", "2096-337", "2010-1171", "2011-1799", "2011-1760", "2011-1303", "2011-1325", "2011-1339", "2011-1381", "2011-1407", "2011-1638", "2008-786", "1-1743", "1-1149", "1-1155", "2046-2009", "2007-778", "2007-284", "2007-305", "2007-325", "2007-335", "2007-345", "2007-370", "2007-400", "2007-421", "2007-446", "2007-471", "2007-496", "2007-537", "2007-569", "2007-603", "2007-633", "2007-667", "2007-697"];
   let deckIdx = 0;
   function deckGo(i) {
     deckIdx = Math.max(0, Math.min(DECK.length - 1, i));
@@ -805,7 +805,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
       ["Short answer: yes. Longer answer: she earns trust in very different rooms, ships under pressure, and brings her own AI tooling, like the ", P('copy generator', '1-1155'), " she built for her team. The ", L('resume', 'resume'), " makes the case in one page."],
       ["I'm biased, but so is the evidence. ", P('Teen safety', '2011-1760'), ", ", P('climate science', '2011-1303'), ", ", P('AI growth', '2010-1171'), ": very different problems, same result. She'd make your team better on day one. ", L('Send her a note', 'contact'), "."]
     )],
-    [/award|prize|recogni|honou?r|epda|european product design/, ["Agents Research Environments, the project Jenny worked on with Meta's AI researchers, won a 2026 European Product Design Award in Interface Design. ", S('See the MSL work', '2010-1153')]],
+    [/award|prize|recogni|honou?r|epda|european product design/, ["Agents Research Environments, the project Jenny worked on with Meta's AI researchers, won a 2026 European Product Design Award in Interface Design. ", S('See the award-winning work', '2096-337')]],
     [/strength|good at|stand out|unique|best/, ["She designs for real-world outcomes and earns trust quickly across very different domains: ", P('AI growth', '2010-1171'), ", ", P('teen safety', '2011-1760'), ", ", P('climate science', '2011-1303'), ", and ", P('fundraising', '2011-1381'), ". She also builds her own tools, like a ", P('growth copy generator', '1-1155'), ". ", RES]],
     [/content design/, ["Content design is designing with words and structure: what a product says, when it says it, and how it's organized, so people can get things done. See how Jenny does it: ", CD]],
     [/model (design|behavior|behaviour)|prompt|eval/, ["Model design treats the model itself as the product: shaping its voice, its judgment, and how honestly it explains what it can and can't do, in close partnership with researchers and evals. See how Jenny approaches it: ", MD]],

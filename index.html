@@ -566,7 +566,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
 
   <aside class="side right" aria-label="Try asking">
     <div class="blk prefs">
-      <div class="pref tw-only"><span class="lbl">Sound</span><button type="button" class="textbtn" id="sound" aria-pressed="true">On</button></div>
+      <div class="pref tw-only"><span class="lbl">Sound</span><button type="button" class="textbtn" id="sound" aria-pressed="false">Off</button></div>
       <p class="note tw-only">Type or click the keys, then press Return.</p><p class="note nb-only">Write a question on the page, then press Return.</p><p class="note lp-only">Type on your keyboard or click the keys. Return sends.</p>
     </div>
   </aside>
@@ -711,7 +711,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
   addEventListener('resize', fit);
 
   /* ---------- Sound ---------- */
-  let soundOn = true, ctx = null;
+  let soundOn = false, ctx = null;
   function wake() {
     if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (err) {} }
     if (ctx && ctx.state === 'suspended') ctx.resume();

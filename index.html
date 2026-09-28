@@ -64,7 +64,7 @@ button{font:inherit;color:inherit}
 .lbl{display:block;margin:0 0 10px;font-size:10px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .who{margin:0;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.75}
 .who span{display:block;color:var(--muted);font-weight:400}
-.meta{display:grid;grid-template-columns:62px 1fr;column-gap:12px;row-gap:5px;margin:0;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5}
+.meta{display:grid;grid-template-columns:max-content 1fr;column-gap:12px;row-gap:5px;margin:0;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5}
 .meta dt{color:var(--muted)}
 .meta dd{margin:0}
 .right{text-align:left}
@@ -225,7 +225,7 @@ body.w-nb .meta dt{font-family:var(--hand);font-style:normal;font-size:15px;line
 body.w-nb .pref .lbl{margin:0}
 body.w-nb .note{font-family:var(--serif);font-size:13px;line-height:1.5;color:var(--ink)}
 body.w-nb .note.nb-only{color:var(--muted);font-size:12.5px}
-body.w-nb .meta{font-family:var(--serif);font-size:13px;letter-spacing:0;text-transform:none;grid-template-columns:58px 1fr;row-gap:5px;line-height:1.4;align-items:baseline}
+body.w-nb .meta{font-family:var(--serif);font-size:13px;letter-spacing:0;text-transform:none;grid-template-columns:max-content 1fr;column-gap:18px;row-gap:8px;line-height:1.4;align-items:baseline}
 body.w-nb .meta dt{font-style:italic}
 body.w-nb .panel{font-family:var(--serif);font-size:17px}
 body.w-nb .panel h2{font-family:var(--serif);font-size:26px;font-weight:500;letter-spacing:0;text-transform:none}
@@ -465,6 +465,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
   .nav .links button::after,.nav .links button::before{display:none}
 }
 @media (prefers-reduced-motion:reduce){.cap{transition:none}.bar.strike{animation:none}}
+.wait{opacity:.55;animation:waitp 1.2s ease-in-out infinite}@keyframes waitp{50%{opacity:.15}}@media (prefers-reduced-motion:reduce){.wait{animation:none}}
 </style>
 </head>
 <body>
@@ -506,7 +507,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
       <div class="knob l"></div><div class="knob r"></div><div class="lever"></div>
       <div class="paper">
         <form class="sheet" id="sheet" autocomplete="off">
-          <div class="typed" id="typed" aria-live="polite"><p>This typewriter answers questions about content design, model design, and Jenny's work.</p></div>
+          <div class="typed" id="typed" aria-live="polite"><p>This typewriter is an AI guide Jenny designed. Ask it about content design, model design, or her work.</p></div>
           <div class="typed line"><span aria-hidden="true">&gt;</span><label for="composer" class="sr" hidden>Your question</label><input class="composer" id="composer" name="composer" type="text" maxlength="90" placeholder="what is content design?" enterkeyhint="send" autocomplete="off" spellcheck="false" aria-label="Type a question"></div>
         </form>
       </div>
@@ -529,12 +530,12 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
         <div class="hand nb-intro">
           <p>Hi, I'm Jenny.</p>
           <p>I'm a content designer. I shape the words and systems behind products and how AI behaves.</p>
-          <p>Write me a question on the next page and I'll write back.</p>
+          <p>Write a question on the next page. An AI guide I designed will write back.</p>
           <svg class="nb-arrow" viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 26 C 30 10, 70 34, 110 18"/><path d="M100 10 L111 18 L101 27"/></svg>
         </div>
       </section>
       <section class="nb-page r">
-        <div class="nb-log" id="nb-log" aria-live="polite"><p class="hand nb-a nb-mobile">Hi, I'm Jenny. Write me a question below and I'll write back.</p></div>
+        <div class="nb-log" id="nb-log" aria-live="polite"><p class="hand nb-a nb-mobile">Hi, I'm Jenny. Write a question below and an AI guide I designed will write back.</p></div>
         <form class="nb-line" id="nb-form" autocomplete="off"><span aria-hidden="true">Q.</span><input class="nb-input" id="nb-input" name="nb-input" type="text" maxlength="120" placeholder="What is content design?" enterkeyhint="send" aria-label="Write a question"></form>
       </section>
     </div>
@@ -544,9 +545,9 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
   <div class="laptop" id="laptop">
     <div class="lp-screen">
       <div class="lp-window">
-        <div class="lp-bar" aria-hidden="true"><i></i><i></i><i></i><span>Ask Jenny</span></div>
+        <div class="lp-bar" aria-hidden="true"><i></i><i></i><i></i><span>Ask about Jenny</span></div>
         <div class="lp-log" id="lp-log" aria-live="polite">
-          <p class="lp-hello"><b>Ask about Jenny's work.</b>Ask about content design, model design, or anything on her resume.</p>
+          <p class="lp-hello"><b>Ask about Jenny's work.</b>An AI guide she designed answers questions about content design, model design, or anything on her resume.</p>
         </div>
         <form class="lp-form" id="lp-form" autocomplete="off">
           <input class="lp-input" id="lp-input" name="lp-input" type="text" maxlength="120" placeholder="Ask a question" enterkeyhint="send" aria-label="Ask a question">
@@ -792,7 +793,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
   }
   const RULES = [
     [/\b(hi|hello|hey|yo|howdy|good (morning|afternoon|evening))\b/, ["Hello! The quickest way to get to know Jenny is her work. Start with the ", L('content design portfolio', 'content'), ", or ", L('the resume', 'resume'), "."]],
-    [/(are you|is this).*(ai|bot|real|chatgpt|claude|human)/, ["I'm a scripted guide, not a live AI. Jenny wrote every answer, which is kind of the point: deciding what a system says, and when, is her job. ", MD]],
+    [/(are you|is this).*(ai|bot|real|chatgpt|claude|human)/, ["Yes, I'm a guide Jenny designed. Deciding what a system says, and when, is her job. ", MD]],
     [/another/, ["Button labels:\n", { ex: 'OK' }, { ex: 'Delete' }, { ex: 'Delete 3 photos' }, "\nThe last one says exactly what will happen before you press it. There's more of this thinking in the ", L('content design portfolio', 'content'), "."]],
     [/example|show me|error message/, ["One error message, three ways:\n", { ex: 'Error 403: Forbidden.' }, { ex: "You don't have access to this file." }, { ex: "You don't have access to this file. Ask the owner to share it." }, "\nThe last one says what happened and what to do next. ", CD]],
     [/crisis|safety check|marked safe|early warning|disaster|earthquake|hurricane|world bank/, ["Jenny owned content for Facebook's crisis response tools. She brought the UN's Early Warnings for All to Facebook with the World Bank, and used on-the-ground research and data science to find wording people understood across literacy levels, which lifted \"marked safe\" check-ins by 5%. ", S('See the crisis response work', '2011-1339')]],
@@ -846,6 +847,45 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
   ];
   let fbi = Math.floor(Math.random() * 6);
   const nextFallback = () => FALLBACKS[(fbi++) % FALLBACKS.length];
+  /* ---------- Live AI answers (falls back to the written answers above) ---------- */
+  const CHAT_URL = 'https://jennyfant-typewriter.jennyfant.workers.dev/'; // set to the Cloudflare Worker URL to turn on live answers
+  const chatLog = [];
+  const TARGETS = { resume: 1, content: 1, model: 1, contact: 1 };
+  function parseReply(text) {
+    const segs = [], re = /\[([^\]]+)\]\(([^)\s]+)\)/g; let i = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > i) segs.push(text.slice(i, m.index));
+      const label = m[1], tgt = m[2].trim();
+      if (TARGETS[tgt]) segs.push({ t: label, open: tgt, inline: true });
+      else if (tgt.startsWith('slide:') && DECK.includes(tgt.slice(6))) segs.push({ t: label, open: 'content', slide: tgt.slice(6), inline: true });
+      else segs.push(label);
+      i = re.lastIndex;
+    }
+    if (i < text.length) segs.push(text.slice(i));
+    return segs.map(x => typeof x === 'string' ? x.replace(/\*\*|__|^#+\s*/gm, '') : x);
+  }
+  const flat = segs => segs.map(x => typeof x === 'string' ? x : x.ex ? '- ' + x.ex + '\n' : '[' + x.t + '](' + (x.slide ? 'slide:' + x.slide : x.open) + ')').join('');
+  function pending(log, cls) {
+    const p = document.createElement('p'); p.className = cls + ' wait'; p.textContent = '…';
+    const t = setTimeout(() => { log.appendChild(p); log.scrollTop = log.scrollHeight; }, 700);
+    return () => { clearTimeout(t); p.remove(); };
+  }
+  async function answer(text, log, cls) {
+    const done = log ? pending(log, cls) : () => {};
+    chatLog.push({ role: 'user', content: text });
+    let segs = null;
+    if (CHAT_URL) {
+      const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 12000);
+      try {
+        const r = await fetch(CHAT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: chatLog.slice(-10) }), signal: ctl.signal });
+        if (r.ok) { const d = await r.json(); if (d && d.reply) segs = parseReply(d.reply); }
+      } catch (e) {}
+      clearTimeout(timer);
+    }
+    if (!segs) segs = vary(RULES.find(([re]) => re.test(text.toLowerCase())));
+    done(); chatLog.push({ role: 'assistant', content: flat(segs) });
+    return segs;
+  }
   const ASKS = ['What is content design?', 'What is model design?', 'Show me an example', "Jenny's content design work", "Jenny's model design work", 'How do I reach Jenny?'];
   const scroller = sheet;
   function scrollDown() { scroller.scrollTop = scroller.scrollHeight; }
@@ -872,9 +912,8 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
     const text = input.value.trim(); if (!text || busy) return;
     busy = true; input.value = ''; input.placeholder = '';
     const q = document.createElement('p'); q.className = 'q'; q.textContent = '> ' + text; typed.appendChild(q); scrollDown();
-    const r = RULES.find(([re]) => re.test(text.toLowerCase()));
-    await sleep(reduce ? 0 : 280);
-    await reply(vary(r));
+    const [segs] = await Promise.all([answer(text, typed, 'wt'), sleep(reduce ? 0 : 280)]);
+    await reply(segs);
     busy = false; if (fine) input.focus({ preventScroll: true });
   }
   async function autoType(q) {
@@ -922,9 +961,8 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
     e.preventDefault(); const text = nbInput.value.trim(); if (!text || nbBusy) return;
     nbBusy = true; nbInput.value = '';
     const q = document.createElement('p'); q.className = 'nb-q'; q.textContent = text; nbLog.appendChild(q); nbDown();
-    const r = RULES.find(([re]) => re.test(text.toLowerCase()));
-    await sleep(reduce ? 0 : 350);
-    await nbReply(vary(r));
+    const [segs] = await Promise.all([answer(text, nbLog, 'hand nb-a'), sleep(reduce ? 0 : 350)]);
+    await nbReply(segs);
     nbBusy = false; if (fine) nbInput.focus({ preventScroll: true });
   });
   function fitNotebook() {
@@ -993,10 +1031,9 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
     e.preventDefault(); const text = lpInput.value.trim(); if (!text || lpBusy) return;
     lpBusy = true; lpInput.value = '';
     const q = document.createElement('p'); q.className = 'lp-q'; q.textContent = text; lpLog.appendChild(q); lpDown();
-    const r = RULES.find(([re]) => re.test(text.toLowerCase()));
-    await sleep(reduce ? 0 : 450);
+    const [segs] = await Promise.all([answer(text, lpLog, 'lp-a'), sleep(reduce ? 0 : 450)]);
     const p = document.createElement('p'); p.className = 'lp-a'; lpLog.appendChild(p);
-    for (const s of (vary(r))) {
+    for (const s of segs) {
       if (typeof s === 'string') await streamInto(p, s);
       else if (s.ex) { const span = document.createElement('span'); span.className = 'ex'; p.appendChild(span); await streamInto(span, s.ex); }
       else { const b = linkFor(s); p.appendChild(b); await streamInto(b, s.t); }

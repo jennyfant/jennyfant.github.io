@@ -900,7 +900,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
       el.textContent += text[i];
       if (text[i] !== ' ' && i % 2 === 0) { clack(.6); if (i % 4 === 0) strike(); }
       if (i % 6 === 0) scrollDown();
-      await sleep(text[i] === '.' || text[i] === ',' ? 70 : 16 + Math.random() * 18);
+      await sleep(text[i] === '.' || text[i] === ',' ? 45 : 10 + Math.random() * 12);
     }
     scrollDown();
   }
@@ -948,7 +948,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
       for (const ch of part) {
         const c = document.createElement('span'); c.className = 'c'; c.textContent = ch;
         c.style.setProperty('--y', ((Math.random() - .5) * 1.4).toFixed(2) + 'px'); w.appendChild(c);
-        if (!reduce) await sleep(20 + Math.random() * 22);
+        if (!reduce) await sleep(12 + Math.random() * 14);
       }
       nbDown();
     }
@@ -1028,7 +1028,7 @@ body.w-nb .nb-line span{font-weight:500;letter-spacing:.02em}
       if (!part) continue;
       if (/^\s+$/.test(part)) { el.appendChild(part.includes('\n') ? document.createElement('br') : document.createTextNode(' ')); continue; }
       const w = document.createElement('span'); w.className = 'wd'; w.textContent = part; el.appendChild(w);
-      if (!reduce) await sleep(28 + Math.random() * 40);
+      if (!reduce) await sleep(20 + Math.random() * 28);
       lpDown();
     }
   }
